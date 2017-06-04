@@ -5,19 +5,41 @@ import (
 )
 
 type Matrix struct {
-	a complex128
-	b complex128
-	c complex128
-	d complex128
+	a, b, c, d complex128
 }
 
-func Conj(in Matrix) Matrix {
-	out := Matrix{}
+var conj = cmplx.Conj
 
-	out.a = in.a
-	out.b = in.b
-	out.c = in.c
-	out.d = in.d
+func Add(l Matrix, r Matrix) Matrix {
+	return Matrix{l.a + r.a, l.b + r.b, l.c + r.c, l.d + r.d}
+}
 
-	return out
+func Conj(m Matrix) Matrix {
+	return Matrix{conj(m.a), conj(m.b), conj(m.c), conj(m.d)}
+}
+
+func Eq(l Matrix, r Matrix) bool {
+	return (l.a == r.a) && (l.b == r.b) && (l.c == r.c) && (l.d == r.d)
+}
+
+func Det(m Matrix) complex128 {
+	return m.a*m.d - m.b*m.c
+}
+
+func Id() Matrix {
+	return Matrix{1, 0, 0, 1}
+}
+
+func Inv(m Matrix) Matrix {
+	var det = Det(m)
+
+	return Matrix{m.d / det, -m.b / det, -m.c / det, m.a / det}
+}
+
+func Mul(l Matrix, r Matrix) Matrix {
+	return Matrix{l.a*r.a + l.b*r.c, l.a*r.b + l.b*r.d, l.c*r.a + l.d*r.b, l.c*r.b + l.d*r.d}
+}
+
+func Sub(l Matrix, r Matrix) Matrix {
+	return Matrix{l.a - r.a, l.b - r.b, l.c - r.c, l.d - r.d}
 }
