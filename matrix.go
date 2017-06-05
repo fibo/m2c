@@ -1,3 +1,4 @@
+// Complex matrices 2x2.
 package m2c
 
 import (
