@@ -6,7 +6,7 @@ import (
 
 var m1 = Matrix{0, 1, 1i, 0}
 var m2 = Matrix{1 + 1i, 1 - 0.5i, 2 + 2i, 2 - 1i}
-var id = Id()
+var id = ID()
 var zero = Matrix{0, 0, 0, 0}
 
 func TestAdd(t *testing.T) {
@@ -81,7 +81,11 @@ func TestInv(t *testing.T) {
 	}
 
 	for _, matrix := range cases {
-		got := Inv(matrix.a)
+		got, err := Inv(matrix.a)
+
+		if err != nil {
+			t.Error(err)
+		}
 
 		if got != matrix.inv {
 			t.Errorf("Inv(%v) == %v, want %v", matrix.a, got, matrix.inv)
@@ -90,6 +94,8 @@ func TestInv(t *testing.T) {
 }
 
 func TestMul(t *testing.T) {
+	m1Inv, _ := Inv(m1)
+
 	cases := []struct {
 		a Matrix
 		b Matrix
@@ -99,7 +105,7 @@ func TestMul(t *testing.T) {
 		{m1, id, m1},
 		{m2, id, m2},
 		{m1, m2, Matrix{2 + 2i, 2 - 1i, -1 + 1i, 0.5 + 1i}},
-		{m1, Inv(m1), id},
+		{m1, m1Inv, id},
 	}
 
 	for _, matrix := range cases {
