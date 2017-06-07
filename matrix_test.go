@@ -6,7 +6,7 @@ import (
 
 var m1 = Matrix{0, 1, 1i, 0}
 var m2 = Matrix{1 + 1i, 1 - 0.5i, 2 + 2i, 2 - 1i}
-var id = ID()
+var id = I()
 var zero = Matrix{0, 0, 0, 0}
 
 func TestAdd(t *testing.T) {
@@ -131,6 +131,23 @@ func TestSub(t *testing.T) {
 
 		if got != matrix.c {
 			t.Errorf("Sub(%v, %v) == %v, want %v", matrix.a, matrix.b, got, matrix.c)
+		}
+	}
+}
+
+func TestT(t *testing.T) {
+	cases := []struct {
+		a Matrix
+		b Matrix
+	}{
+		{id, id},
+	}
+
+	for _, matrix := range cases {
+		got := T(matrix.a)
+
+		if got != matrix.b {
+			t.Errorf("T(%v) == %v, want %v", matrix.a, got, matrix.b)
 		}
 	}
 }

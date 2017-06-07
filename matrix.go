@@ -8,11 +8,7 @@ import (
 
 // A matrix with two rows and two columns with Complex values.
 type Matrix struct {
-	a, b, c, d complex128
-}
-
-func (m *Matrix) String() string {
-	return fmt.Sprintf("⌈%v\t%v⌉\n⌊%v\t%v⌋", m.a, m.b, m.c, m.d)
+	A, B, C, D complex128
 }
 
 // It is not possible to invert a matrix if determinant is zero.
@@ -28,31 +24,31 @@ var conj = cmplx.Conj
 
 // Add two matrices.
 func Add(l Matrix, r Matrix) Matrix {
-	return Matrix{l.a + r.a, l.b + r.b, l.c + r.c, l.d + r.d}
+	return Matrix{l.A + r.A, l.B + r.B, l.C + r.C, l.D + r.D}
 }
 
-// Return the conjugated matrix.
+// Conj returns the conjugated matrix.
 func Conj(m Matrix) Matrix {
-	return Matrix{conj(m.a), conj(m.b), conj(m.c), conj(m.d)}
+	return Matrix{conj(m.A), conj(m.B), conj(m.C), conj(m.D)}
 }
 
-// Check it tow matrices are equal.
+// Eq checks if two matrices are equal.
 func Eq(l Matrix, r Matrix) bool {
-	return (l.a == r.a) && (l.b == r.b) && (l.c == r.c) && (l.d == r.d)
+	return (l.A == r.A) && (l.B == r.B) && (l.C == r.C) && (l.D == r.D)
 }
 
-// Compute matrix determinant.
+// Det computes matrix determinant.
 func Det(m Matrix) complex128 {
-	return m.a*m.d - m.b*m.c
+	return m.A*m.D - m.B*m.C
 }
 
-// Returns the identity matrix.
-func ID() Matrix {
+// I returns the identity matrix.
+func I() Matrix {
 	return Matrix{1, 0, 0, 1}
 }
 
-// Invert given matrix. If it has determinant equal to zero, an error
-// will be returned.
+// Inv inverts given matrix. If it has determinant equal to zero, an error
+// will be returned as second argument.
 func Inv(m Matrix) (Matrix, error) {
 	var det = Det(m)
 
@@ -60,25 +56,25 @@ func Inv(m Matrix) (Matrix, error) {
 		return Matrix{}, &CannotInvertMatrixError{m}
 	}
 
-	return Matrix{m.d / det, -m.b / det, -m.c / det, m.a / det}, nil
+	return Matrix{m.D / det, -m.B / det, -m.C / det, m.A / det}, nil
 }
 
-// Multiply two matrices. This operator is not commutative.
+// Mul multiplies two matrices. This operator is not commutative.
 func Mul(l Matrix, r Matrix) Matrix {
-	return Matrix{l.a*r.a + l.b*r.c, l.a*r.b + l.b*r.d, l.c*r.a + l.d*r.b, l.c*r.b + l.d*r.d}
+	return Matrix{l.A*r.A + l.B*r.C, l.A*r.B + l.B*r.D, l.C*r.A + l.D*r.B, l.C*r.B + l.D*r.D}
 }
 
-// Multiply matrix by a complex.
+// Scalar multiplies matrix by a complex number.
 func Scalar(m Matrix, c complex128) Matrix {
-	return Matrix{m.a * c, m.b * c, m.c * c, m.d * c}
+	return Matrix{m.A * c, m.B * c, m.C * c, m.D * c}
 }
 
-// Subtract two matrices.
+// Sub subtracts two matrices.
 func Sub(l Matrix, r Matrix) Matrix {
-	return Matrix{l.a - r.a, l.b - r.b, l.c - r.c, l.d - r.d}
+	return Matrix{l.A - r.A, l.B - r.B, l.C - r.C, l.D - r.D}
 }
 
-// Return the transposed matrix.
-func Tr(m Matrix) Matrix {
-	return Matrix{m.a, m.c, m.b, m.d}
+// T returns the transposed matrix.
+func T(m Matrix) Matrix {
+	return Matrix{m.A, m.C, m.B, m.D}
 }
