@@ -2,6 +2,9 @@
 
 > go for 2x2 complex matrices
 
+[![GoDoc](https://godoc.org/github.com/fibo/m2c?status.svg)](https://godoc.org/github.com/fibo/m2c)
+[![GoLint](https://img.shields.io/badge/go-lint-blue.svg)](http://go-lint.appspot.com/github.com/fibo/m2c)
+
 ## Description
 
 Complex matrices 2x2 (a.k.a. **m2c**) are a wonderful land to explore.
@@ -26,7 +29,7 @@ import "m2c"
 Get the identity matrix
 
 ```go
-var id = m2c.Id()
+var id = m2c.ID()
 ```
 
 Multiply two matrices.

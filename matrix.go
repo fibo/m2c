@@ -2,12 +2,26 @@
 package m2c
 
 import (
-	"errors"
+	"fmt"
 	"math/cmplx"
 )
 
+// A matrix with two rows and two columns with Complex values.
 type Matrix struct {
 	a, b, c, d complex128
+}
+
+func (m *Matrix) String() string {
+	return fmt.Sprintf("⌈%v\t%v⌉\n⌊%v\t%v⌋", m.a, m.b, m.c, m.d)
+}
+
+// It is not possible to invert a matrix if determinant is zero.
+type CannotInvertMatrixError struct {
+	matrix Matrix
+}
+
+func (e *CannotInvertMatrixError) Error() string {
+	return fmt.Sprintf("Cannot invert a matrix with determinant=0\n%v", e.matrix)
 }
 
 var conj = cmplx.Conj
@@ -33,20 +47,20 @@ func Det(m Matrix) complex128 {
 }
 
 // Returns the identity matrix.
-func Id() Matrix {
+func ID() Matrix {
 	return Matrix{1, 0, 0, 1}
 }
 
-// Invert given matrix. If it has determinant equal to zero, the function
-// will panic.
-func Inv(m Matrix) Matrix {
+// Invert given matrix. If it has determinant equal to zero, an error
+// will be returned.
+func Inv(m Matrix) (Matrix, error) {
 	var det = Det(m)
 
 	if 0 == det {
-		panic(errors.New("Cannot invert a matrix with determinant=0"))
+		return Matrix{}, &CannotInvertMatrixError{m}
 	}
 
-	return Matrix{m.d / det, -m.b / det, -m.c / det, m.a / det}
+	return Matrix{m.d / det, -m.b / det, -m.c / det, m.a / det}, nil
 }
 
 // Multiply two matrices. This operator is not commutative.
