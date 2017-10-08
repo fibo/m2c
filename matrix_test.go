@@ -7,7 +7,8 @@ import (
 var m1 = Matrix{0, 1, 1i, 0}
 var m2 = Matrix{1 + 1i, 1 - 0.5i, 2 + 2i, 2 - 1i}
 var id = I()
-var zero = Matrix{0, 0, 0, 0}
+var symplectic = J()
+var zero = Zero()
 
 func TestAdd(t *testing.T) {
 	cases := []struct {
@@ -117,6 +118,24 @@ func TestMul(t *testing.T) {
 	}
 }
 
+func TestNeg(t *testing.T) {
+	cases := []struct {
+		in  Matrix
+		neg Matrix
+	}{
+		{id, Matrix{-1, 0, 0, -1}},
+		{zero, zero},
+	}
+
+	for _, matrix := range cases {
+		got := Neg(matrix.in)
+
+		if got != matrix.neg {
+			t.Errorf("Neg(%v) == %v, want %v", matrix.in, got, matrix.neg)
+		}
+	}
+}
+
 func TestSub(t *testing.T) {
 	cases := []struct {
 		a Matrix
@@ -141,6 +160,8 @@ func TestT(t *testing.T) {
 		b Matrix
 	}{
 		{id, id},
+		{zero, zero},
+		{symplectic, Matrix{0, -1, 1, 0}},
 	}
 
 	for _, matrix := range cases {

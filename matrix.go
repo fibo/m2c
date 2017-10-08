@@ -47,8 +47,14 @@ func I() Matrix {
 	return Matrix{1, 0, 0, 1}
 }
 
-// Inv inverts given matrix. If it has determinant equal to zero, an error
-// will be returned as second argument.
+// J returns the symplectic matrix.
+func J() Matrix {
+	return Matrix{0, 1, -1, 0}
+}
+
+// Inv inverts given matrix respect to multiplication.
+// If it has determinant equal to zero, an error will be returned
+// as second argument.
 func Inv(m Matrix) (Matrix, error) {
 	var det = Det(m)
 
@@ -64,6 +70,11 @@ func Mul(l Matrix, r Matrix) Matrix {
 	return Matrix{l.A*r.A + l.B*r.C, l.A*r.B + l.B*r.D, l.C*r.A + l.D*r.B, l.C*r.B + l.D*r.D}
 }
 
+// Neg computes matrix inverse respect to addition.
+func Neg(m Matrix) Matrix {
+	return Matrix{-m.A, -m.B, -m.C, -m.D}
+}
+
 // Scalar multiplies matrix by a complex number.
 func Scalar(m Matrix, c complex128) Matrix {
 	return Matrix{m.A * c, m.B * c, m.C * c, m.D * c}
@@ -77,4 +88,9 @@ func Sub(l Matrix, r Matrix) Matrix {
 // T returns the transposed matrix.
 func T(m Matrix) Matrix {
 	return Matrix{m.A, m.C, m.B, m.D}
+}
+
+// Zero returns the matrix with all zeros.
+func Zero() Matrix {
+	return Matrix{0, 0, 0, 0}
 }
