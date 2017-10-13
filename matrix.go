@@ -1,4 +1,3 @@
-// Package m2c implements complex matrices 2x2.
 package m2c
 
 import (
@@ -6,12 +5,12 @@ import (
 	"math/cmplx"
 )
 
-// A Matrix with two rows and two columns with Complex values.
+// A two rows and two columns Matrix with Complex numbers as values.
 type Matrix struct {
 	A, B, C, D complex128
 }
 
-// CannotInvertMatrixError compains cause it is not possible to invert a matrix if determinant is zero.
+// CannotInvertMatrixError complains cause it is not possible to invert a matrix if determinant is zero.
 type CannotInvertMatrixError struct {
 	matrix Matrix
 }
