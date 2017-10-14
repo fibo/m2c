@@ -5,7 +5,7 @@ import (
 	"math/cmplx"
 )
 
-// A two rows and two columns Matrix with Complex numbers as values.
+// Matrix with two rows, two columns and Complex numbers as values.
 type Matrix struct {
 	A, B, C, D complex128
 }
