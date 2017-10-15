@@ -10,6 +10,11 @@ type Matrix struct {
 	A, B, C, D complex128
 }
 
+// Matrix contructor.
+func NewMatrix(a, b, c, d complex128) Matrix {
+	return Matrix{A: a, B: b, C: c, D: d}
+}
+
 // CannotInvertMatrixError complains cause it is not possible to invert a matrix if determinant is zero.
 type CannotInvertMatrixError struct {
 	matrix Matrix
