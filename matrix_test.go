@@ -4,8 +4,8 @@ import (
 	"testing"
 )
 
-var m1 = Matrix{0, 1, 1i, 0}
-var m2 = Matrix{1 + 1i, 1 - 0.5i, 2 + 2i, 2 - 1i}
+var m1 = NewMatrix(0, 1, 1i, 0)
+var m2 = NewMatrix(1+1i, 1-0.5i, 2+2i, 2-1i)
 var id = I()
 var symplectic = J()
 var zero = Zero()
@@ -105,7 +105,7 @@ func TestMul(t *testing.T) {
 		{id, id, id},
 		{m1, id, m1},
 		{m2, id, m2},
-		{m1, m2, Matrix{2 + 2i, 2 - 1i, -1 + 1i, 0.5 + 1i}},
+		{m1, m2, NewMatrix(2+2i, 2-1i, -1+1i, 0.5+1i)},
 		{m1, m1Inv, id},
 	}
 
@@ -123,7 +123,7 @@ func TestNeg(t *testing.T) {
 		in  Matrix
 		neg Matrix
 	}{
-		{id, Matrix{-1, 0, 0, -1}},
+		{id, NewMatrix(-1, 0, 0, -1)},
 		{zero, zero},
 	}
 
@@ -161,7 +161,7 @@ func TestT(t *testing.T) {
 	}{
 		{id, id},
 		{zero, zero},
-		{symplectic, Matrix{0, -1, 1, 0}},
+		{symplectic, NewMatrix(0, -1, 1, 0)},
 	}
 
 	for _, matrix := range cases {
