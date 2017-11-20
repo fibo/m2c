@@ -5,6 +5,10 @@ import (
 	"math/cmplx"
 )
 
+var (
+	conj = cmplx.Conj
+)
+
 // Matrix with two rows, two columns and Complex numbers as values.
 type Matrix struct {
 	A, B, C, D complex128
@@ -23,8 +27,6 @@ type CannotInvertMatrixError struct {
 func (e *CannotInvertMatrixError) Error() string {
 	return fmt.Sprintf("Cannot invert a matrix with determinant=0\n%v", e.matrix)
 }
-
-var conj = cmplx.Conj
 
 // Add two matrices.
 func Add(l Matrix, r Matrix) Matrix {
