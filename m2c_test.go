@@ -4,11 +4,12 @@ import (
 	"testing"
 )
 
-var m1 = NewMatrix(0, 1, 1i, 0)
-var m2 = NewMatrix(1+1i, 1-0.5i, 2+2i, 2-1i)
-var id = I()
-var symplectic = J()
-var zero = Zero()
+var m1 = Matrix{0, 1, 1i, 0}
+var m2 = Matrix{1 + 1i, 1 - 0.5i, 2 + 2i, 2 - 1i}
+var one = Matrix{1, 0, 0, 1} // identity matrix
+var minusOne = Matrix{-1, 0, 0, -1}
+var j = Matrix{0, 1, -1, 0} // symplectic matrix
+var zero = Matrix{0, 0, 0, 0}
 
 func TestAdd(t *testing.T) {
 	cases := []struct {
@@ -16,7 +17,7 @@ func TestAdd(t *testing.T) {
 		b Matrix
 		c Matrix
 	}{
-		{id, zero, id},
+		{one, zero, one},
 	}
 
 	for _, matrix := range cases {
@@ -33,7 +34,7 @@ func TestConj(t *testing.T) {
 		in   Matrix
 		conj Matrix
 	}{
-		{id, Matrix{1, 0, 0, 1}},
+		{one, one},
 		{m1, Matrix{0, 1, -1i, 0}},
 		{m2, Matrix{1 - 1i, 1 + 0.5i, 2 - 2i, 2 + 1i}},
 	}
@@ -58,7 +59,7 @@ func TestDet(t *testing.T) {
 		in  Matrix
 		det complex128
 	}{
-		{id, 1},
+		{one, 1},
 		{m1, -1i},
 		{m2, 0},
 		{Mul(m1, m1), -1},
@@ -78,7 +79,7 @@ func TestInv(t *testing.T) {
 		a   Matrix
 		inv Matrix
 	}{
-		{id, id},
+		{one, one},
 	}
 
 	for _, matrix := range cases {
@@ -102,11 +103,11 @@ func TestMul(t *testing.T) {
 		b Matrix
 		c Matrix
 	}{
-		{id, id, id},
-		{m1, id, m1},
-		{m2, id, m2},
-		{m1, m2, NewMatrix(2+2i, 2-1i, -1+1i, 0.5+1i)},
-		{m1, m1Inv, id},
+		{one, one, one},
+		{m1, one, m1},
+		{m2, one, m2},
+		{m1, m2, Matrix{2 + 2i, 2 - 1i, -1 + 1i, 0.5 + 1i}},
+		{m1, m1Inv, one},
 	}
 
 	for _, matrix := range cases {
@@ -123,7 +124,7 @@ func TestNeg(t *testing.T) {
 		in  Matrix
 		neg Matrix
 	}{
-		{id, NewMatrix(-1, 0, 0, -1)},
+		{one, minusOne},
 		{zero, zero},
 	}
 
@@ -142,7 +143,7 @@ func TestSub(t *testing.T) {
 		b Matrix
 		c Matrix
 	}{
-		{id, id, zero},
+		{one, one, zero},
 	}
 
 	for _, matrix := range cases {
@@ -159,9 +160,9 @@ func TestT(t *testing.T) {
 		a Matrix
 		b Matrix
 	}{
-		{id, id},
+		{one, one},
 		{zero, zero},
-		{symplectic, NewMatrix(0, -1, 1, 0)},
+		{j, Matrix{0, -1, 1, 0}},
 	}
 
 	for _, matrix := range cases {

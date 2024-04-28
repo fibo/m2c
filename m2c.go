@@ -1,3 +1,4 @@
+// Package m2c implements complex matrices 2x2.
 package m2c
 
 import (
@@ -9,17 +10,12 @@ var (
 	conj = cmplx.Conj
 )
 
-// Matrix with two rows, two columns and Complex numbers as values.
+// A matrix with two rows, two columns and complex numbers as values.
 type Matrix struct {
 	A, B, C, D complex128
 }
 
-// Matrix contructor.
-func NewMatrix(a, b, c, d complex128) Matrix {
-	return Matrix{A: a, B: b, C: c, D: d}
-}
-
-// CannotInvertMatrixError complains cause it is not possible to invert a matrix if determinant is zero.
+// CannotInvertMatrixError complains when the argument of the inversion operator is a matrix with determinant equal to zero.
 type CannotInvertMatrixError struct {
 	matrix Matrix
 }
@@ -46,16 +42,6 @@ func Eq(l Matrix, r Matrix) bool {
 // Det computes matrix determinant.
 func Det(m Matrix) complex128 {
 	return m.A*m.D - m.B*m.C
-}
-
-// I returns the identity matrix.
-func I() Matrix {
-	return Matrix{1, 0, 0, 1}
-}
-
-// J returns the symplectic matrix.
-func J() Matrix {
-	return Matrix{0, 1, -1, 0}
 }
 
 // Inv inverts given matrix respect to multiplication.
@@ -94,9 +80,4 @@ func Sub(l Matrix, r Matrix) Matrix {
 // T returns the transposed matrix.
 func T(m Matrix) Matrix {
 	return Matrix{m.A, m.C, m.B, m.D}
-}
-
-// Zero returns the matrix with all zeros.
-func Zero() Matrix {
-	return Matrix{0, 0, 0, 0}
 }

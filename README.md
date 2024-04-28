@@ -2,8 +2,7 @@
 
 > go for 2x2 complex matrices
 
-[![GoDoc](https://godoc.org/github.com/fibo/m2c?status.svg)](https://godoc.org/github.com/fibo/m2c)
-[![GoLint](https://img.shields.io/badge/go-lint-blue.svg)](http://go-lint.appspot.com/github.com/fibo/m2c)
+[![GoReference](https://pkg.go.dev/badge/github.com/fibo/m2c)](https://pkg.go.dev/github.com/fibo/m2c)
 
 ## Description
 
@@ -57,5 +56,5 @@ if err != nil {
 
 ## License
 
-[MIT](http://g14n.info/mit-license/)
+[MIT](https://fibo.github.io/mit-license/)
 
