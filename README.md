@@ -22,36 +22,38 @@ language to implement them since it has `complex128` data type, yeah!
 First of all import `m2c`.
 
 ```go
-import "m2c"
+import "github.com/fibo/m2c"
 ```
 
-Get the identity matrix
+Create an identity matrix
 
 ```go
-var id = m2c.I()
-fmt.Printf("%v", id)
-// {(1+0i) (0+0i) (0+0i) (1+0i)}
+var id = m2c.Matrix{1, 0, 0, 1}
+fmt.Println(id) // {(1+0i) (0+0i) (0+0i) (1+0i)}
 ```
 
 Multiply two matrices.
 
 ```go
 var a = m2c.Matrix{1, 0, 0, 1}
-var b = m2c.Matrix{1, 1+i, 0, 1-i}
+var b = m2c.Matrix{1, 1 + 1i, 0, 1 - 1i}
 
 var c = m2c.Mul(a, b)
+fmt.Println(c) // {(1+0i) (1+1i) (1+1i) (1-1i)}
 ```
 
 Invert a matrix.
 
 ```go
-var a = m2c.Matrix{2i, 0, 0, 1}
+var d = m2c.Matrix{2i, 0, 0, 1}
 
-var invA, err = m2c.Inv(a)
+var invD, err = m2c.Inv(d)
 
 if err != nil {
 	log.Fatal(err)
 }
+
+fmt.Println(invD) // {(0-0.5i) (-0+0i) (-0+0i) (1+0i)}
 ```
 
 ## License
